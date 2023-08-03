@@ -52,9 +52,14 @@ export class SidenavComponent implements OnInit {
         this.menus = menus;
         const menuRoutes = menus.map((menu) => this.getMenuItem(menu));
         menuRoutes.push({
-          path: '**',
+          path: 'loading',
           component: LoadingComponent,
         } as Route);
+        // add a default '**' route redirecting to the first menu
+        menuRoutes.push({
+          path: '**',
+          redirectTo: menuRoutes[0].path,
+        });
 
         this.activatedRoute.routeConfig?.children?.forEach((route) => {
           if (!route.children) {
@@ -64,7 +69,10 @@ export class SidenavComponent implements OnInit {
         });
         // reload the route
         const currentUrl = this.router.url;
-        await this.router.navigateByUrl('/');
+        // navigate to the ./loading route relative to the current route
+        await this.router.navigate(['loading'], {
+          relativeTo: this.activatedRoute,
+        });
         setTimeout(async () => {
           await this.router.navigateByUrl(currentUrl);
         });
