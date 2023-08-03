@@ -7,6 +7,7 @@ import { IMenu } from '../../models/IMenu';
 import { ActivatedRoute, Route, Router } from '@angular/router';
 // eslint-disable-next-line @nx/enforce-module-boundaries
 import { moduleMap } from '@auth-poc-with-orgs/pages/src/app/components/moduleMap';
+import { LoadingComponent } from '@app-shell/src/app/components/loading/loading.component';
 
 @Component({
   selector: 'app-sidenav',
@@ -52,7 +53,7 @@ export class SidenavComponent implements OnInit {
         const menuRoutes = menus.map((menu) => this.getMenuItem(menu));
         menuRoutes.push({
           path: '**',
-          redirectTo: menuRoutes[0].path,
+          component: LoadingComponent,
         } as Route);
 
         this.activatedRoute.routeConfig?.children?.forEach((route) => {
