@@ -1,0 +1,12 @@
+.center-on-window{
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.center-text{
+  font-size: 1.5rem;
+  text-align: center;
+  line-height: 2;
+}
+

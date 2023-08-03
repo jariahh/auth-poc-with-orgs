@@ -15,6 +15,8 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatListModule } from '@angular/material/list';
+import { LoadingComponent } from './components/loading/loading.component';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @NgModule({
   declarations: [
@@ -23,6 +25,7 @@ import { MatListModule } from '@angular/material/list';
     FooterComponent,
     SidenavComponent,
     ContentContainerComponent,
+    LoadingComponent,
   ],
   imports: [
     CommonModule,
@@ -35,6 +38,7 @@ import { MatListModule } from '@angular/material/list';
     HttpClientModule,
     MatToolbarModule,
     MatListModule,
+    MatProgressSpinnerModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

@@ -1,5 +1,6 @@
 import { Route } from '@angular/router';
 import { AppComponent } from './app.component';
+import { LoadingComponent } from './components/loading/loading.component';
 
 export const appRoutes: Route[] = [
   {
@@ -8,19 +9,11 @@ export const appRoutes: Route[] = [
     children: [
       {
         path: ':organizationId/:clientId',
-        loadChildren: () =>
-          // eslint-disable-next-line @nx/enforce-module-boundaries
-          import('@auth-poc-with-orgs/pages/src/app/app.module').then(
-            (m) => m.AppModule
-          ),
+        children: [{ path: '**', component: LoadingComponent }],
       },
       {
         path: '',
-        loadChildren: () =>
-          // eslint-disable-next-line @nx/enforce-module-boundaries
-          import('@auth-poc-with-orgs/pages/src/app/app.module').then(
-            (m) => m.AppModule
-          ),
+        children: [{ path: '**', component: LoadingComponent }],
       },
     ],
   },

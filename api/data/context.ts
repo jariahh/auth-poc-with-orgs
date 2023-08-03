@@ -2,6 +2,7 @@ import { Injectable } from '@decorators/di';
 export interface IMenu {
   id: number;
   name: string;
+  modules?: string;
   icon: string;
   url: string;
   clients: number[];
@@ -22,6 +23,7 @@ export class DataContext {
       name: 'Dashboard',
       icon: 'dashboard',
       url: 'dashboard',
+      modules: 'DashboardModule',
       clients: [1, 2],
     },
     {
@@ -29,19 +31,29 @@ export class DataContext {
       name: 'Projects',
       icon: 'work',
       url: 'projects',
+      modules: 'ProjectsModule',
       clients: [1, 2],
     },
     {
       id: 3,
       name: 'Clients',
+      modules: 'ClientsModule',
       icon: 'people',
       url: 'clients',
       clients: [1, 4],
     },
-    { id: 4, name: 'Users', icon: 'person', url: 'users', clients: [3, 4] },
+    {
+      id: 4,
+      name: 'Users',
+      modules: 'UsersModule',
+      icon: 'person',
+      url: 'users',
+      clients: [3, 4],
+    },
     {
       id: 5,
       name: 'Settings',
+      modules: 'SettingsModule',
       icon: 'settings',
       url: 'settings',
       clients: [1, 2, 3, 4],

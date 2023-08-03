@@ -14,23 +14,36 @@ export const appRoutes: Route[] = [
     children: [
       {
         path: 'dashboard',
-        component: DashboardComponent,
+        loadChildren: () =>
+          import('./components/dashboard/dashboards.module').then(
+            (m) => m.DashboardsModule
+          ),
       },
       {
         path: 'projects',
-        component: ProjectsComponent,
+        loadChildren: () =>
+          import('./components/projects/projects.module').then(
+            (m) => m.ProjectsModule
+          ),
       },
       {
         path: 'clients',
-        component: ClientsComponent,
+        loadChildren: () =>
+          import('./components/clients/client.module').then(
+            (m) => m.ClientModule
+          ),
       },
       {
         path: 'users',
-        component: UsersComponent,
+        loadChildren: () =>
+          import('./components/users/users.module').then((m) => m.UsersModule),
       },
       {
         path: 'settings',
-        component: SettingsComponent,
+        loadChildren: () =>
+          import('./components/settings/settings.module').then(
+            (m) => m.SettingsModule
+          ),
       },
       {
         path: '',

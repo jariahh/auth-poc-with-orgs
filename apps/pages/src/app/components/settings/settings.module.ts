@@ -1,9 +1,7 @@
 import { NgModule } from '@angular/core';
-import { RouterModule } from '@angular/router';
-import { AppComponent } from './app.component';
-import { appRoutes } from './app.routes';
-import { NxWelcomeComponent } from './nx-welcome.component';
 import { CommonModule } from '@angular/common';
+import { SettingsComponent } from './settings.component';
+import { RouterModule } from '@angular/router';
 import { MatTableModule } from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
@@ -12,10 +10,10 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatPaginatorModule } from '@angular/material/paginator';
 
 @NgModule({
-  declarations: [AppComponent, NxWelcomeComponent],
+  declarations: [SettingsComponent],
   imports: [
     CommonModule,
-    RouterModule.forChild(appRoutes),
+    RouterModule.forChild([{ path: '', component: SettingsComponent }]),
     MatTableModule,
     MatIconModule,
     MatButtonModule,
@@ -23,6 +21,5 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     MatToolbarModule,
     MatPaginatorModule,
   ],
-  providers: [],
 })
-export class AppModule {}
+export class SettingsModule {}

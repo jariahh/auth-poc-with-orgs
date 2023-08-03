@@ -9,11 +9,13 @@ import { AuthModule } from '@auth0/auth0-angular';
 import { AuthenticationModule } from '@auth-poc-with-orgs/authentication';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule } from '@angular/material/button';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [AppComponent, BaseComponent, LogoutComponent],
   imports: [
     BrowserModule,
+    HttpClientModule,
     RouterModule.forRoot(appRoutes, { initialNavigation: 'enabledBlocking' }),
     AuthModule.forRoot({
       domain: 'qa-alchemy.us.auth0.com',
