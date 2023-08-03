@@ -1,0 +1,33 @@
+<mat-toolbar>
+  <span>Projects</span>
+  <span class="spacer"></span>
+  <button mat-button (click)="add()">
+    <mat-icon>add_circle</mat-icon>
+    <span>Add Project</span>
+  </button>
+</mat-toolbar>
+<table mat-table [dataSource]="dataSource">
+  <ng-container [matColumnDef]="column" *ngFor="let column of displayedColumns">
+    <th mat-header-cell *matHeaderCellDef>{{column}}</th>
+    <td mat-cell *matCellDef="let element">{{element[column]}}</td>
+  </ng-container>
+  <ng-container matColumnDef="actions" >
+    <th mat-header-cell *matHeaderCellDef>Actions</th>
+    <td mat-cell *matCellDef="let element">
+      <button mat-icon-button (click)="edit(element)">
+        <mat-icon>edit</mat-icon>
+      </button>
+      <button mat-icon-button (click)="delete(element)">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </td>
+  </ng-container>
+  <tr mat-header-row *matHeaderRowDef="displayedColumnsActions"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumnsActions"></tr>
+</table>
+
+
+<mat-paginator [pageSizeOptions]="[10, 20, 50]"
+               showFirstLastButtons
+               aria-label="Select page of periodic elements">
+</mat-paginator>

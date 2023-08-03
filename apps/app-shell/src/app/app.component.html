@@ -1,0 +1,43 @@
+<app-header>
+  <button mat-button (click)="toggleSideNav()">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <div>My App</div>
+  <div class="spacer"></div>
+  <mat-form-field style="margin-right: .25rem;">
+    <mat-select [(ngModel)]="organization"
+                (selectionChange)="changeOrganization($event.value)">
+      <mat-option *ngFor="let organization of organizations" [value]="organization">
+        {{organization.name}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field style="margin-right: .25rem">
+    <mat-select [(ngModel)]="client"
+                (selectionChange)="changeClient($event.value)">
+      <mat-option *ngFor="let client of clients" [value]="client">
+        {{client.name}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+    <button style="margin-top: 0.5rem;" mat-button [matMenuTriggerFor]="appMenu">
+    <span style="align-items: center; display:inline-flex;">
+      <img [src]="(userService.user$ | async)?.picture" referrerpolicy="no-referrer" alt="Profile Picture"
+           class="profile-pic">
+      {{(userService.user$ | async)?.name}}
+    </span>
+    </button>
+    <mat-menu #appMenu="matMenu">
+      <button mat-menu-item (click)="logout()">Logout</button>
+    </mat-menu>
+</app-header>
+<!-- sidenav goes here -->
+<div style="display: flex" [class.showSideNav]="showSideNav">
+  <app-sidenav [organization]="organization" [client]="client"></app-sidenav>
+  <!-- Routed views go here -->
+  <app-content-container>
+    <router-outlet></router-outlet>
+  </app-content-container>
+</div>
+<app-footer></app-footer>
+

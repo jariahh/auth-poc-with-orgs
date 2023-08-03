@@ -8,18 +8,24 @@
   "targets": {
     "build": {
       "executor": "@angular-devkit/build-angular:browser",
-      "outputs": ["{options.outputPath}"],
+      "outputs": [
+        "{options.outputPath}"
+      ],
       "options": {
         "outputPath": "dist/apps/auth-poc-with-orgs",
         "index": "apps/auth-poc-with-orgs/src/index.html",
         "main": "apps/auth-poc-with-orgs/src/main.ts",
-        "polyfills": ["zone.js"],
+        "polyfills": [
+          "zone.js"
+        ],
         "tsConfig": "apps/auth-poc-with-orgs/tsconfig.app.json",
         "assets": [
           "apps/auth-poc-with-orgs/src/favicon.ico",
           "apps/auth-poc-with-orgs/src/assets"
         ],
-        "styles": ["apps/auth-poc-with-orgs/src/styles.scss"],
+        "styles": [
+          "apps/auth-poc-with-orgs/src/styles.scss"
+        ],
         "scripts": []
       },
       "configurations": {
@@ -69,7 +75,9 @@
     },
     "lint": {
       "executor": "@nx/linter:eslint",
-      "outputs": ["{options.outputFile}"],
+      "outputs": [
+        "{options.outputFile}"
+      ],
       "options": {
         "lintFilePatterns": [
           "apps/auth-poc-with-orgs/**/*.ts",
@@ -79,7 +87,9 @@
     },
     "test": {
       "executor": "@nx/jest:jest",
-      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "outputs": [
+        "{workspaceRoot}/coverage/{projectRoot}"
+      ],
       "options": {
         "jestConfig": "apps/auth-poc-with-orgs/jest.config.ts",
         "passWithNoTests": true

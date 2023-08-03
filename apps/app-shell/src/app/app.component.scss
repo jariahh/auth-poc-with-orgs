@@ -1,0 +1,16 @@
+app-sidenav{
+  width: 0;
+  overflow: hidden;
+  transition: ease-in-out 0.2s;
+}
+.showSideNav{
+  app-sidenav{
+    width: 250px;
+  }
+}
+.profile-pic{
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  margin-right: 10px;
+}

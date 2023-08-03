@@ -1,0 +1,8 @@
+<mat-list>
+  <a mat-list-item
+     *ngFor="let item of menus"
+     [routerLink]="[organizationId, clientId, item.url]">
+    <mat-icon>{{item.icon}}</mat-icon>
+    {{item.name}}
+  </a>
+</mat-list>

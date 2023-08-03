@@ -1,0 +1,28 @@
+<mat-toolbar>
+  <span>Users</span>
+  <span class="spacer"></span>
+  <button mat-button matTooltip="Add" (click)="addUser()">
+    <mat-icon>add_circle</mat-icon> Add User
+  </button>
+</mat-toolbar>
+<table mat-table [dataSource]="users">
+  <ng-container [matColumnDef]="column" *ngFor="let column of displayedColumns">
+    <th mat-header-cell *matHeaderCellDef> {{column | uppercase}} </th>
+    <td mat-cell *matCellDef="let element"> {{element[column]}} </td>
+  </ng-container>
+  <!-- Actions -->
+  <ng-container matColumnDef="actions">
+    <th mat-header-cell *matHeaderCellDef> Actions </th>
+    <td mat-cell *matCellDef="let element">
+      <button mat-icon-button matTooltip="Edit" (click)="editUser(element)">
+        <mat-icon>edit</mat-icon>
+      </button>
+      <button mat-icon-button matTooltip="Delete" (click)="deleteUser(element)">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </td>
+  </ng-container>
+  <tr mat-header-row *matHeaderRowDef="displayedColumnsActions"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumnsActions;"></tr>
+</table>
+
