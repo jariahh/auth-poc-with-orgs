@@ -12,10 +12,7 @@ export const moduleMap = new Map<string, any>([
     'ClientsModule',
     () => import('./clients/client.module').then((m) => m.ClientModule),
   ],
-  [
-    'UsersModule',
-    () => import('./users/users.module').then((m) => m.UsersModule),
-  ],
+  ['UsersModule', import('./users/users.module').then((m) => m.UsersModule)],
   [
     'SettingsModule',
     () => import('./settings/settings.module').then((m) => m.SettingsModule),
