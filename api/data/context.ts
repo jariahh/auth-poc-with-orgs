@@ -1,4 +1,5 @@
 import { Injectable } from '@decorators/di';
+import * as _ from 'lodash';
 export interface IMenu {
   id: number;
   name: string;
@@ -10,12 +11,52 @@ export interface IMenu {
 @Injectable()
 export class DataContext {
   constructor() {
-    console.log('Context');
+    setTimeout(() => {
+      this.menus.forEach((menu) => {
+        //choose a random number of clients
+        const numberOfClients = Math.floor(Math.random() * 10) + 1;
+        const clients = this.clients.slice();
+        menu.clients = [];
+        for (let i = 0; i < numberOfClients; i++) {
+          // choose a random client
+          const clientIndex = Math.floor(Math.random() * clients.length);
+          const client = clients[clientIndex];
+          // add the client to the menu
+          menu.clients.push(client.id);
+          // remove the client from the list of clients
+          clients.splice(clientIndex, 1);
+        }
+      });
+      //ensure that each client is in at least one menu
+      this.clients.forEach((client) => {
+        const menuIndex = Math.floor(Math.random() * this.menus.length);
+        const menu = this.menus[menuIndex];
+        menu.clients.push(client.id);
+      });
+    });
   }
 
   public organizations: any[] = [
-    { id: 1, name: 'Marvel Universe', clients: [1, 2] },
-    { id: 2, name: 'DC Universe', clients: [3, 4] },
+    {
+      id: 1,
+      name: 'Marvel Universe',
+      clients: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+    },
+    {
+      id: 2,
+      name: 'DC Universe',
+      clients: [11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
+    },
+    {
+      id: 3,
+      name: 'Star Wars Universe',
+      clients: [21, 22, 23, 24, 25, 26, 27, 28, 29, 30],
+    },
+    {
+      id: 4,
+      name: 'Star Trek Universe',
+      clients: [31, 32, 33, 34, 35, 36, 37, 38, 39, 40],
+    },
   ];
   public menus: IMenu[] = [
     {
@@ -24,7 +65,7 @@ export class DataContext {
       icon: 'dashboard',
       url: 'dashboard',
       modules: 'DashboardModule',
-      clients: [1, 2],
+      clients: [],
     },
     {
       id: 2,
@@ -32,7 +73,7 @@ export class DataContext {
       icon: 'work',
       url: 'projects',
       modules: 'ProjectsModule',
-      clients: [1, 2],
+      clients: [],
     },
     {
       id: 3,
@@ -40,7 +81,7 @@ export class DataContext {
       modules: 'ClientsModule',
       icon: 'people',
       url: 'clients',
-      clients: [1, 4],
+      clients: [],
     },
     {
       id: 4,
@@ -48,7 +89,7 @@ export class DataContext {
       modules: 'UsersModule',
       icon: 'person',
       url: 'users',
-      clients: [3, 4],
+      clients: [],
     },
     {
       id: 5,
@@ -56,14 +97,50 @@ export class DataContext {
       modules: 'SettingsModule',
       icon: 'settings',
       url: 'settings',
-      clients: [1, 2, 3, 4],
+      clients: [],
     },
   ];
   public clients: any[] = [
-    { id: 1, name: 'Batman enterprises', projects: 2 },
-    { id: 2, name: 'Superman inc.', projects: 1 },
-    { id: 3, name: 'Spiderman corp.', projects: 3 },
-    { id: 4, name: 'Ironman ltd.', projects: 2 },
+    { id: 1, name: 'Tony Stark', organization: 1 },
+    { id: 2, name: 'Steve Rogers', organization: 1 },
+    { id: 3, name: 'Bruce Banner', organization: 1 },
+    { id: 4, name: 'Thor Odinson', organization: 1 },
+    { id: 5, name: 'Natasha Romanoff', organization: 1 },
+    { id: 6, name: 'Clint Barton', organization: 1 },
+    { id: 7, name: 'James Rhodes', organization: 1 },
+    { id: 8, name: 'Sam Wilson', organization: 1 },
+    { id: 9, name: 'Wanda Maximoff', organization: 1 },
+    { id: 10, name: 'Vision', organization: 1 },
+    { id: 11, name: 'Bruce Wayne', organization: 2 },
+    { id: 12, name: 'Clark Kent', organization: 2 },
+    { id: 13, name: 'Diana Prince', organization: 2 },
+    { id: 14, name: 'Barry Allen', organization: 2 },
+    { id: 15, name: 'Arthur Curry', organization: 2 },
+    { id: 16, name: 'Victor Stone', organization: 2 },
+    { id: 17, name: 'Hal Jordan', organization: 2 },
+    { id: 18, name: 'John Stewart', organization: 2 },
+    { id: 19, name: 'Oliver Queen', organization: 2 },
+    { id: 20, name: 'Billy Batson', organization: 2 },
+    { id: 21, name: 'Luke Skywalker', organization: 3 },
+    { id: 22, name: 'Han Solo', organization: 3 },
+    { id: 23, name: 'Leia Organa', organization: 3 },
+    { id: 24, name: 'Lando Calrissian', organization: 3 },
+    { id: 25, name: 'Chewbacca', organization: 3 },
+    { id: 26, name: 'R2-D2', organization: 3 },
+    { id: 27, name: 'C-3PO', organization: 3 },
+    { id: 28, name: 'Mace Windu', organization: 3 },
+    { id: 29, name: 'Yoda', organization: 3 },
+    { id: 30, name: 'Darth Vader', organization: 3 },
+    { id: 31, name: 'James T. Kirk', organization: 4 },
+    { id: 32, name: 'Spock', organization: 4 },
+    { id: 33, name: 'Leonard McCoy', organization: 4 },
+    { id: 34, name: 'Montgomery Scott', organization: 4 },
+    { id: 35, name: 'Nyota Uhura', organization: 4 },
+    { id: 36, name: 'Hikaru Sulu', organization: 4 },
+    { id: 37, name: 'Pavel Chekov', organization: 4 },
+    { id: 38, name: 'Christine Chapel', organization: 4 },
+    { id: 39, name: 'Janice Rand', organization: 4 },
+    { id: 40, name: 'Nero', organization: 4 },
   ];
   public users: any[] = [
     { id: 1, name: 'John Doe', email: 'john.doe@example.com' },
@@ -73,29 +150,46 @@ export class DataContext {
     { id: 5, name: 'John Brown', email: 'john.brown@example.com' },
   ];
   public projects: any[] = [
-    { id: 1, name: 'Project Batmobile', client: 1 },
-    { id: 2, name: 'Project Batcave', client: 1 },
-    { id: 3, name: 'Project Batwing', client: 1 },
-    { id: 4, name: 'Project Batboat', client: 1 },
-    { id: 5, name: 'Project Batcopter', client: 1 },
-    { id: 6, name: 'Project Batcomputer', client: 1 },
-    { id: 7, name: 'Project Batbelt', client: 1 },
-    { id: 8, name: 'Project Superman Cape', client: 2 },
-    { id: 9, name: 'Project Superman Boots', client: 2 },
-    { id: 10, name: 'Project Superman Suit', client: 2 },
-    { id: 11, name: 'Project Superman Glasses', client: 2 },
-    { id: 12, name: 'Project Superman Underwear', client: 2 },
-    { id: 13, name: 'Project Spiderman Web', client: 3 },
-    { id: 14, name: 'Project Spiderman Suit', client: 3 },
-    { id: 15, name: 'Project Spiderman Mask', client: 3 },
-    { id: 16, name: 'Project Spiderman Underwear', client: 3 },
-    { id: 17, name: 'Project Spiderman Shoes', client: 3 },
-    { id: 18, name: 'Project Spiderman Gloves', client: 3 },
-    { id: 19, name: 'Project Ironman Suit', client: 4 },
-    { id: 20, name: 'Project Ironman Mask', client: 4 },
-    { id: 21, name: 'Project Ironman Underwear', client: 4 },
-    { id: 22, name: 'Project Ironman Shoes', client: 4 },
-    { id: 23, name: 'Project Ironman Gloves', client: 4 },
+    { id: 1, name: 'Ironman Suit', client: 1 },
+    { id: 2, name: 'Ironman Gloves', client: 1 },
+    { id: 3, name: 'Ironman Helmet', client: 1 },
+    { id: 4, name: 'Captain America Shield', client: 2 },
+    { id: 5, name: 'Captain America Suit', client: 2 },
+    { id: 6, name: 'Captain America Helmet', client: 2 },
+    { id: 7, name: 'Hulk Pants', client: 3 },
+    { id: 8, name: 'Hulk Gloves', client: 3 },
+    { id: 9, name: 'Hulk Shirt', client: 3 },
+    { id: 10, name: 'Hulk Shoes', client: 3 },
+    { id: 11, name: 'Thor Hammer', client: 4 },
+    { id: 12, name: 'Thor Suit', client: 4 },
+    { id: 13, name: 'Thor Helmet', client: 4 },
+    { id: 14, name: 'Black Widow Suit', client: 5 },
+    { id: 15, name: 'Black Widow Gloves', client: 5 },
+    { id: 16, name: 'Black Widow Shoes', client: 5 },
+    { id: 17, name: 'Hawkeye Suit', client: 6 },
+    { id: 18, name: 'Hawkeye Gloves', client: 6 },
+    { id: 19, name: 'Hawkeye Shoes', client: 6 },
+    { id: 20, name: 'War Machine Suit', client: 7 },
+    { id: 21, name: 'War Machine Gloves', client: 7 },
+    { id: 22, name: 'War Machine Shoes', client: 7 },
+    { id: 23, name: 'Falcon Suit', client: 8 },
+    { id: 24, name: 'Falcon Gloves', client: 8 },
+    { id: 25, name: 'Falcon Shoes', client: 8 },
+    { id: 26, name: 'Scarlet Witch Suit', client: 9 },
+    { id: 27, name: 'Scarlet Witch Gloves', client: 9 },
+    { id: 28, name: 'Scarlet Witch Shoes', client: 9 },
+    { id: 29, name: 'Vision Suit', client: 10 },
+    { id: 30, name: 'Vision Gloves', client: 10 },
+    { id: 31, name: 'Vision Shoes', client: 10 },
+    { id: 32, name: 'Batman Suit', client: 11 },
+    { id: 33, name: 'Batman Gloves', client: 11 },
+    { id: 34, name: 'Batman Shoes', client: 11 },
+    { id: 35, name: 'Superman Suit', client: 12 },
+    { id: 36, name: 'Superman Gloves', client: 12 },
+    { id: 37, name: 'Superman Shoes', client: 12 },
+    { id: 38, name: 'Aquaman Suit', client: 13 },
+    { id: 39, name: 'Aquaman Gloves', client: 13 },
+    { id: 40, name: 'Aquaman Shoes', client: 13 },
   ];
   public settings: any[] = [
     { id: 1, name: 'General', icon: 'settings', url: 'general' },

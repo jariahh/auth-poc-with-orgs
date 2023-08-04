@@ -22,6 +22,7 @@
     "@decorators/di": "^3.0.0",
     "@decorators/server": "^1.0.0-beta.3",
     "@nx/angular": "16.6.0",
+    "lodash": "^4.17.21",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.13.0"
@@ -48,6 +49,7 @@
     "@nx/workspace": "16.6.0",
     "@schematics/angular": "~16.1.0",
     "@types/jest": "^29.4.0",
+    "@types/lodash": "^4.14.196",
     "@types/node": "16.11.7",
     "@typescript-eslint/eslint-plugin": "^5.60.1",
     "@typescript-eslint/parser": "^5.60.1",

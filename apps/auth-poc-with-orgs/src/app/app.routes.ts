@@ -12,16 +12,10 @@ export const appRoutes: Route[] = [
   },
   {
     path: '',
-    component: AppComponent,
-    children: [
-      {
-        path: '',
-        component: BaseComponent,
-        canActivate: [AuthGuard],
-        loadChildren: () =>
-          // eslint-disable-next-line @nx/enforce-module-boundaries
-          import('@app-shell/src/app/app.module').then((m) => m.AppModule),
-      },
-    ],
+    component: BaseComponent,
+    canActivate: [AuthGuard],
+    loadChildren: () =>
+      // eslint-disable-next-line @nx/enforce-module-boundaries
+      import('@app-shell/src/app/app.module').then((m) => m.AppModule),
   },
 ];

@@ -20,6 +20,7 @@ import { HttpClientModule } from '@angular/common/http';
     AuthModule.forRoot({
       domain: 'qa-alchemy.us.auth0.com',
       clientId: 'hrpVpK5PiHBE69bnAaLr55levrD2RQng',
+
       authorizationParams: {
         redirect_uri: window.location.origin,
         audience: 'https://qa-portal.alchemycommerce.io',
