@@ -44,8 +44,14 @@ export class SidenavComponent implements OnInit {
         this.loadMenu(this.organizationId, this.clientId);
       });
   }
-
-  private loadMenu(organizationId: string, clientId: string) {
+  currentUrl = '';
+  private async loadMenu(organizationId: string, clientId: string) {
+    if (!this.router.url.endsWith('loading')) {
+      this.currentUrl = this.router.url;
+    }
+    await this.router.navigate([organizationId, clientId, 'loading'], {
+      relativeTo: this.activatedRoute,
+    });
     this.httpClient
       .get<IMenu[]>(`/api/menus/menuByClient/${clientId}`)
       .subscribe(async (menus) => {
@@ -67,15 +73,10 @@ export class SidenavComponent implements OnInit {
           }
           route.children = menuRoutes;
         });
-        // reload the route
-        const currentUrl = this.router.url;
-        // navigate to the ./loading route relative to the current route
-        await this.router.navigate(['loading'], {
-          relativeTo: this.activatedRoute,
-        });
         setTimeout(async () => {
-          await this.router.navigateByUrl(currentUrl);
-        });
+          console.log('currentUrl', this.currentUrl);
+          await this.router.navigateByUrl(this.currentUrl);
+        }, 10);
       });
   }
   private getMenuItem(menu: IMenu): Route {
