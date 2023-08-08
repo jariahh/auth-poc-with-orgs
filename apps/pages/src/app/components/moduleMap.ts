@@ -20,4 +20,5 @@ export const moduleMap = new Map<string, any>([
     'SettingsModule',
     () => import('./settings/settings.module').then((m) => m.SettingsModule),
   ],
+  ['HomeModule', () => import('./home/home.module').then((m) => m.HomeModule)],
 ]);

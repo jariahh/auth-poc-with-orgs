@@ -8,7 +8,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class SettingsComponent implements OnInit {
   settings: any[] = [];
-  displayedColumns: string[] = ['id', 'name', 'icon', 'url'];
+  displayedColumns: string[] = ['id', 'name', 'value'];
   displayedColumnsActions: string[] = [...this.displayedColumns, 'actions'];
   constructor(private httpClient: HttpClient) {}
   ngOnInit() {

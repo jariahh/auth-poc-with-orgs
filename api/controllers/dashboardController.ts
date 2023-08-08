@@ -5,17 +5,23 @@ import { DataContext } from '../data/context';
 export class DashboardController {
   constructor(private dataContext: DataContext) {}
   @Get('/dashboard/:id')
-  getDashboard(@Params('id') id: string) {
-    const dashboard = this.dataContext.dashboards.find(
-      (dashboard) => dashboard.id === +id
+  async getDashboard(@Params('id') id: string) {
+    const organizations = await this.dataContext.organizations.find();
+    const dashboards = organizations.map((organization) =>
+      organization.clients.map((client) => client.dashboards)
     );
-    dashboard.dashboardData = this.dataContext.dashboardWidgets.filter(
-      (dashboardData) => dashboardData.dashboard === +id
-    );
-    return dashboard;
+    const flattenedDashboards = dashboards.flat(2);
+    return flattenedDashboards.find((dashboard) => dashboard.id === +id);
   }
   @Get('/dashboards')
-  getDashboards() {
-    return this.dataContext.dashboards;
+  async getDashboards() {
+    const organizations = await this.dataContext.organizations.find();
+    const dashboards = organizations.map((organization) =>
+      organization.clients.map((client) => client.dashboards)
+    );
+    // flatten the array of arrays and filter out any dashboards that don't have a name
+    return dashboards
+      .flat(2)
+      .filter((dashboard) => dashboard?.name != null && dashboard.name !== '');
   }
 }

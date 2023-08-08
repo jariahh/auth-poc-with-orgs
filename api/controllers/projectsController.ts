@@ -5,11 +5,22 @@ import { DataContext } from '../data/context';
 export class ProjectsController {
   constructor(private dataContext: DataContext) {}
   @Get('/projects')
-  getProjects() {
-    return this.dataContext.projects;
+  async getProjects() {
+    const organizations = await this.dataContext.organizations.find();
+    const projects = organizations.map((organization) =>
+      organization.clients.map((client) => client.projects)
+    );
+    return projects
+      .flat(2)
+      .filter((project) => project?.name != null && project.name !== '');
   }
   @Get('/project/:id')
-  getProject(@Params('id') id: string) {
-    return this.dataContext.projects.find((project) => project.id === +id);
+  async getProject(@Params('id') id: string) {
+    const organizations = await this.dataContext.organizations.find();
+    const projects = organizations.map((organization) =>
+      organization.clients.map((client) => client.projects)
+    );
+    const flattenedProjects = projects.flat(2);
+    return flattenedProjects.find((project) => project.id === +id);
   }
 }

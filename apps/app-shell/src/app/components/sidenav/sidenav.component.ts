@@ -1,13 +1,10 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { IOrganization } from '../../models/IOrganization';
 import { IClient } from '../../models/IClient';
 import { BehaviorSubject, combineLatest, filter } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
 import { IMenu } from '../../models/IMenu';
-import { ActivatedRoute, Route, Router } from '@angular/router';
-// eslint-disable-next-line @nx/enforce-module-boundaries
-import { moduleMap } from '@auth-poc-with-orgs/pages/src/app/components/moduleMap';
-import { LoadingComponent } from '@app-shell/src/app/components/loading/loading.component';
+import { ActivatedRoute } from '@angular/router';
+import { MenuService } from '../../services/menu.service';
 
 @Component({
   selector: 'app-sidenav',
@@ -19,9 +16,9 @@ export class SidenavComponent implements OnInit {
   organizationId = '';
   clientId = '';
   constructor(
-    private httpClient: HttpClient,
-    private router: Router,
-    private activatedRoute: ActivatedRoute
+    private menuService: MenuService,
+    private activatedRoute: ActivatedRoute,
+    private changeDetectorRef: ChangeDetectorRef
   ) {}
   organization$ = new BehaviorSubject<IOrganization | null>(null);
   client$ = new BehaviorSubject<IClient | null>(null);
@@ -41,52 +38,17 @@ export class SidenavComponent implements OnInit {
         this.organizationId = organization?.id ?? '';
         this.clientId = client?.id ?? '';
 
-        this.loadMenu(this.organizationId, this.clientId);
+        this.menuService.loadMenu(
+          this.organizationId,
+          this.clientId,
+          this.activatedRoute
+        );
       });
-  }
-  currentUrl = '';
-  private async loadMenu(organizationId: string, clientId: string) {
-    if (!this.router.url.endsWith('loading')) {
-      this.currentUrl = this.router.url;
-    }
-    await this.router.navigate([organizationId, clientId, 'loading'], {
-      relativeTo: this.activatedRoute,
+    this.menuService.menus$.subscribe((menus) => {
+      this.menus = menus;
+      setTimeout(() => {
+        this.changeDetectorRef.detectChanges();
+      }, 100);
     });
-    this.httpClient
-      .get<IMenu[]>(`/api/menus/menuByClient/${clientId}`)
-      .subscribe(async (menus) => {
-        this.menus = menus;
-        const menuRoutes = menus.map((menu) => this.getMenuItem(menu));
-        menuRoutes.push({
-          path: 'loading',
-          component: LoadingComponent,
-        } as Route);
-        // add a default '**' route redirecting to the first menu
-        menuRoutes.push({
-          path: '**',
-          redirectTo: menuRoutes[0].path,
-        });
-
-        this.activatedRoute.routeConfig?.children?.forEach((route) => {
-          if (!route.children) {
-            route.children = [];
-          }
-          route.children = menuRoutes;
-        });
-        setTimeout(async () => {
-          console.log('currentUrl', this.currentUrl);
-          await this.router.navigateByUrl(this.currentUrl);
-        }, 10);
-      });
-  }
-  private getMenuItem(menu: IMenu): Route {
-    return {
-      path: menu.url,
-      loadChildren: this.getModule(menu.modules),
-    } as Route;
-  }
-
-  private getModule(moduleName: string) {
-    return moduleMap.get(moduleName);
   }
 }

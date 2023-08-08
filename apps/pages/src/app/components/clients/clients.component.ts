@@ -10,7 +10,11 @@ import { HttpClient } from '@angular/common/http';
 })
 export class ClientsComponent implements OnInit, AfterViewInit {
   displayedColumns: string[] = ['id', 'name'];
-  displayedColumnsActions: string[] = [...this.displayedColumns, 'actions'];
+  displayedColumnsActions: string[] = [
+    ...this.displayedColumns,
+    'organizations.name',
+    'actions',
+  ];
   dataSource = new MatTableDataSource<any>([]);
 
   @ViewChild(MatPaginator) paginator: MatPaginator | undefined;
